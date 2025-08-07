@@ -4,41 +4,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPTMaster</title>
+    <title>GPTMaster - Top 5 AI Projects</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
         nav {
             display: flex;
             gap: 2rem;
             justify-content: center;
-            background-color: #222;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
             padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         nav a {
             color: #fff;
             text-decoration: none;
             font-size: 1.1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background 0.2s, color 0.2s;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         nav a:hover {
-            background-color: #fff;
-            color: #222;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .year-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .year-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .year-btn:hover,
+        .year-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-rank {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card h3 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-features li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .project-features li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .project-link:hover {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav {
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+
+            nav a {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+
+            .projects-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <main>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Project</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </nav>
-    </main>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="hero" id="home">
+        <h1>GPTMaster</h1>
+        <p>Discover the most revolutionary AI projects that shaped our world from 2021 to 2025</p>
+    </div>
+
+    <div class="year-selector">
+        <button class="year-btn active" onclick="showYear(2021)">2021</button>
+        <button class="year-btn" onclick="showYear(2022)">2022</button>
+        <button class="year-btn" onclick="showYear(2023)">2023</button>
+        <button class="year-btn" onclick="showYear(2024)">2024</button>
+        <button class="year-btn" onclick="showYear(2025)">2025</button>
+    </div>
+
+    <div class="projects-container" id="projects">
+        <!-- 2021 Projects -->
+        <div class="project-year" data-year="2021">
+            <div class="project-card">
+                <div class="project-rank">1</div>
+                <h3>DALL-E</h3>
+                <p class="project-description">OpenAI's revolutionary text-to-image AI that can create realistic images
+                    from textual descriptions, marking a breakthrough in creative AI.</p>
+                <ul class="project-features">
+                    <li>12 billion parameter transformer model</li>
+                    <li>Text-to-image generation</li>
+                    <li>Creative concept combination</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">2</div>
+                <h3>Codex (GitHub Copilot)</h3>
+                <p class="project-description">OpenAI's code generation model that powers GitHub Copilot,
+                    revolutionizing software development with AI pair programming.</p>
+                <ul class="project-features">
+                    <li>Natural language to code translation</li>
+                    <li>Multiple programming languages</li>
+                    <li>Context-aware suggestions</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">3</div>
+                <h3>AlphaFold 2</h3>
+                <p class="project-description">DeepMind's protein structure prediction system that solved a 50-year-old
+                    challenge in biology with unprecedented accuracy.</p>
+                <ul class="project-features">
+                    <li>Protein structure prediction</li>
+                    <li>90% accuracy rate</li>
+                    <li>Drug discovery applications</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">4</div>
+                <h3>PaLM</h3>
+                <p class="project-description">Google's 540-billion parameter language model demonstrating breakthrough
+                    capabilities in reasoning and code generation.</p>
+                <ul class="project-features">
+                    <li>540B parameters</li>
+                    <li>Chain-of-thought reasoning</li>
+                    <li>Multilingual capabilities</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">5</div>
+                <h3>CLIP</h3>
+                <p class="project-description">OpenAI's vision-language model that understands images in the context of
+                    natural language, enabling zero-shot image classification.</p>
+                <ul class="project-features">
+                    <li>Vision-language understanding</li>
+                    <li>Zero-shot classification</li>
+                    <li>400M image-text pairs training</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+        </div>
+
+        <!-- 2022 Projects -->
+        <div class="project-year hidden" data-year="2022">
+            <div class="project-card">
+                <div class="project-rank">1</div>
+                <h3>ChatGPT</h3>
+                <p class="project-description">OpenAI's conversational AI that brought large language models to
+                    mainstream users, achieving 100M users in just 2 months.</p>
+                <ul class="project-features">
+                    <li>Conversational AI interface</li>
+                    <li>RLHF training approach</li>
+                    <li>100M+ users in 2 months</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">2</div>
+                <h3>Stable Diffusion</h3>
+                <p class="project-description">Stability AI's open-source text-to-image model that democratized AI art
+                    generation and sparked a creative revolution.</p>
+                <ul class="project-features">
+                    <li>Open-source availability</li>
+                    <li>High-quality image generation</li>
+                    <li>Community-driven development</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">3</div>
+                <h3>Midjourney</h3>
+                <p class="project-description">Independent research lab's AI art generator known for its distinctive
+                    artistic style and user-friendly Discord interface.</p>
+                <ul class="project-features">
+                    <li>Artistic style specialization</li>
+                    <li>Discord-based interface</li>
+                    <li>Community collaboration features</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">4</div>
+                <h3>LaMDA 2</h3>
+                <p class="project-description">Google's Language Model for Dialogue Applications with improved
+                    conversational abilities and factual grounding.</p>
+                <ul class="project-features">
+                    <li>Dialogue specialization</li>
+                    <li>Factual grounding</li>
+                    <li>Safety-focused design</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">5</div>
+                <h3>Make-A-Video</h3>
+                <p class="project-description">Meta's AI system that generates high-quality videos from text
+                    descriptions, advancing multimodal AI capabilities.</p>
+                <ul class="project-features">
+                    <li>Text-to-video generation</li>
+                    <li>High-quality output</li>
+                    <li>Temporal consistency</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+        </div>
+
+        <!-- 2023 Projects -->
+        <div class="project-year hidden" data-year="2023">
+            <div class="project-card">
+                <div class="project-rank">1</div>
+                <h3>GPT-4</h3>
+                <p class="project-description">OpenAI's most advanced language model with multimodal capabilities,
+                    reasoning improvements, and enhanced safety features.</p>
+                <ul class="project-features">
+                    <li>Multimodal input support</li>
+                    <li>Advanced reasoning capabilities</li>
+                    <li>Improved factual accuracy</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">2</div>
+                <h3>Bard (PaLM 2)</h3>
+                <p class="project-description">Google's conversational AI powered by PaLM 2, offering real-time
+                    information access and improved reasoning capabilities.</p>
+                <ul class="project-features">
+                    <li>Real-time web access</li>
+                    <li>Improved reasoning</li>
+                    <li>Google services integration</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">3</div>
+                <h3>Claude</h3>
+                <p class="project-description">Anthropic's AI assistant focused on being helpful, harmless, and honest,
+                    with strong constitutional AI principles.</p>
+                <ul class="project-features">
+                    <li>Constitutional AI training</li>
+                    <li>Long context windows</li>
+                    <li>Safety-focused design</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">4</div>
+                <h3>LLaMA</h3>
+                <p class="project-description">Meta's collection of foundation language models designed to democratize
+                    access to large language models for research.</p>
+                <ul class="project-features">
+                    <li>Open research access</li>
+                    <li>Efficient parameter usage</li>
+                    <li>Multiple model sizes</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">5</div>
+                <h3>Runway Gen-2</h3>
+                <p class="project-description">Runway's next-generation AI video generation model capable of creating
+                    realistic videos from text prompts and images.</p>
+                <ul class="project-features">
+                    <li>Text and image to video</li>
+                    <li>High-quality output</li>
+                    <li>Creative control features</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+        </div>
+
+        <!-- 2024 Projects -->
+        <div class="project-year hidden" data-year="2024">
+            <div class="project-card">
+                <div class="project-rank">1</div>
+                <h3>GPT-4o</h3>
+                <p class="project-description">OpenAI's omni-modal AI with real-time voice, vision, and text
+                    capabilities, offering more natural human-AI interaction.</p>
+                <ul class="project-features">
+                    <li>Real-time multimodal interaction</li>
+                    <li>Voice conversation capabilities</li>
+                    <li>Enhanced reasoning speed</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">2</div>
+                <h3>Claude 3 Opus</h3>
+                <p class="project-description">Anthropic's most capable AI model with near-human performance on complex
+                    reasoning tasks and enhanced creativity.</p>
+                <ul class="project-features">
+                    <li>Human-level reasoning</li>
+                    <li>200K context window</li>
+                    <li>Multimodal capabilities</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">3</div>
+                <h3>Gemini Ultra</h3>
+                <p class="project-description">Google's most advanced AI model with state-of-the-art performance across
+                    text, code, audio, image, and video understanding.</p>
+                <ul class="project-features">
+                    <li>Multimodal excellence</li>
+                    <li>Advanced reasoning</li>
+                    <li>Efficient scaling</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">4</div>
+                <h3>Sora</h3>
+                <p class="project-description">OpenAI's text-to-video model capable of generating realistic and
+                    imaginative videos up to a minute long from text instructions.</p>
+                <ul class="project-features">
+                    <li>Text-to-video generation</li>
+                    <li>Up to 60 seconds duration</li>
+                    <li>Photorealistic quality</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">5</div>
+                <h3>Devin AI</h3>
+                <p class="project-description">Cognition Labs' AI software engineer capable of autonomous coding,
+                    debugging, and deploying applications end-to-end.</p>
+                <ul class="project-features">
+                    <li>Autonomous software development</li>
+                    <li>End-to-end project completion</li>
+                    <li>Real-world problem solving</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+        </div>
+
+        <!-- 2025 Projects -->
+        <div class="project-year hidden" data-year="2025">
+            <div class="project-card">
+                <div class="project-rank">1</div>
+                <h3>GPT-5 (Orion)</h3>
+                <p class="project-description">OpenAI's next-generation model with significantly improved reasoning,
+                    multimodal understanding, and agent capabilities.</p>
+                <ul class="project-features">
+                    <li>Advanced reasoning capabilities</li>
+                    <li>Enhanced multimodal understanding</li>
+                    <li>Autonomous agent features</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">2</div>
+                <h3>Claude 4</h3>
+                <p class="project-description">Anthropic's latest model with enhanced constitutional AI, improved
+                    safety, and superior performance across diverse tasks.</p>
+                <ul class="project-features">
+                    <li>Advanced constitutional AI</li>
+                    <li>Enhanced safety measures</li>
+                    <li>Superior task performance</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">3</div>
+                <h3>Gemini 2.0</h3>
+                <p class="project-description">Google's next-gen AI with breakthrough capabilities in reasoning,
+                    planning, and real-world problem solving.</p>
+                <ul class="project-features">
+                    <li>Advanced planning capabilities</li>
+                    <li>Real-world problem solving</li>
+                    <li>Integrated Google ecosystem</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">4</div>
+                <h3>Sora 2.0</h3>
+                <p class="project-description">OpenAI's enhanced video generation model with longer duration, better
+                    consistency, and interactive video editing capabilities.</p>
+                <ul class="project-features">
+                    <li>Extended video duration</li>
+                    <li>Interactive editing features</li>
+                    <li>Improved temporal consistency</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-rank">5</div>
+                <h3>AlphaCode 3</h3>
+                <p class="project-description">DeepMind's latest code generation model with competitive programming
+                    performance and real-world software development capabilities.</p>
+                <ul class="project-features">
+                    <li>Competitive programming level</li>
+                    <li>Real-world development</li>
+                    <li>Multi-language support</li>
+                </ul>
+                <a href="#" class="project-link">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showYear(year) {
+            // Hide all project years
+            const projectYears = document.querySelectorAll('.project-year');
+            projectYears.forEach(py => py.classList.add('hidden'));
+
+            // Show selected year
+            const selectedYear = document.querySelector(`[data-year="${year}"]`);
+            if (selectedYear) {
+                selectedYear.classList.remove('hidden');
+            }
+
+            // Update active button
+            const yearBtns = document.querySelectorAll('.year-btn');
+            yearBtns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Add fade-in animation
+            selectedYear.style.opacity = '0';
+            selectedYear.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                selectedYear.style.transition = 'all 0.5s ease';
+                selectedYear.style.opacity = '1';
+                selectedYear.style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add scroll effects
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                if (isVisible) {
+                    card.style.transform = 'translateY(0)';
+                    card.style.opacity = '1';
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
